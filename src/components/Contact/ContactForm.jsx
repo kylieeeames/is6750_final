@@ -1,16 +1,22 @@
 import { Form } from "react-router-dom";
 
 const ContactForm = ({ actionData }) => {
+  const actionMessage = actionData
+    ? actionData.success
+      ? `Contact request saved. Request ID: ${actionData.data?.name}`
+      : `An error occurred: ${actionData.message}`
+    : null;
+
   return (
     <div className="col-lg-7 mb-5">
       <div className="contact-form bg-light p-30">
         <div id="success">
-          {actionData ? (
+          {actionMessage ? (
             <div
               className={`alert ${actionData.success ? "alert-success" : "alert-danger"}`}
               role="alert"
             >
-              {actionData.message}
+              {actionMessage}
             </div>
           ) : null}
         </div>

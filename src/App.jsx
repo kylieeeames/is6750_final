@@ -113,6 +113,14 @@ const router = createBrowserRouter([
         action: loginAction,
       },
       { path: "logout", loader: logoutLoader },
+      {
+        path: "*",
+        element: (
+          <Suspense fallback={loadingFallback}>
+            <LazyErrorPage />
+          </Suspense>
+        ),
+      },
     ],
   },
 ]);

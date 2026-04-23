@@ -1,12 +1,18 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CartContext from "../../store/cart-context";
 
 const ProductTile = ({product, classes}) => {
     const cartCtx = useContext(CartContext);
+    const navigate = useNavigate();
+
+    const goToDetail = () => {
+        navigate(`/products/${product.id}`);
+    };
 
     const addTileItemHandler = (event) => {
         event.preventDefault();
+        event.stopPropagation();
         cartCtx.addItem({
             id: product.id,
             title: product.title,
@@ -16,16 +22,23 @@ const ProductTile = ({product, classes}) => {
         });
     };
 
+    const ignoreTileClick = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+    };
+
     return (
         <div className={classes}>
         <div className="product-item bg-light mb-4">
-            <div className="product-img position-relative overflow-hidden">
+            <div className="product-img position-relative overflow-hidden" role="link" tabIndex={0} onClick={goToDetail} onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") goToDetail();
+            }}>
                 <img className="img-fluid w-100" src={product.thumbnail} alt="" />
                 <div className="product-action">
-                    <Link className="btn btn-outline-dark btn-square" to="#" onClick={addTileItemHandler}><i className="fa fa-shopping-cart"></i></Link>
-                    <Link className="btn btn-outline-dark btn-square" to="/temp"><i className="far fa-heart"></i></Link>
-                    <Link className="btn btn-outline-dark btn-square" to="/temp"><i className="fa fa-sync-alt"></i></Link>
-                    <Link className="btn btn-outline-dark btn-square" to="/temp"><i className="fa fa-search"></i></Link>
+                    <Link className="btn btn-outline-dark btn-square" to="/cart" onClick={addTileItemHandler} aria-label="Add to cart"><i className="fa fa-shopping-cart"></i></Link>
+                    <button type="button" className="btn btn-outline-dark btn-square" onClick={ignoreTileClick} aria-label="Wishlist (coming soon)"><i className="far fa-heart"></i></button>
+                    <button type="button" className="btn btn-outline-dark btn-square" onClick={ignoreTileClick} aria-label="Compare (coming soon)"><i className="fa fa-sync-alt"></i></button>
+                    <Link className="btn btn-outline-dark btn-square" to={`/products/${product.id}`} onClick={(e) => e.stopPropagation()} aria-label="View details"><i className="fa fa-search"></i></Link>
                 </div>
             </div>
             <div className="text-center py-4">

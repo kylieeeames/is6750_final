@@ -76,7 +76,7 @@ function createCheckoutAction() {
         paymentType: formData.get("paymentType") || "Cash On Delivery",
       };
 
-      await db.post("/orders.json", order);
+      await db.post("/orders", order);
 
       sessionStorage.removeItem("cartItems");
       window.dispatchEvent(new Event("cartstoragechange"));

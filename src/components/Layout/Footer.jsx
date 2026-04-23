@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
     return ( <div className="container-fluid bg-dark text-secondary mt-5 pt-5">
     <div className="row px-xl-5 pt-5">
@@ -13,23 +15,21 @@ const Footer = () => {
                 <div className="col-md-4 mb-5">
                     <h5 className="text-secondary text-uppercase mb-4">Quick Shop</h5>
                     <div className="d-flex flex-column justify-content-start">
-                        <a className="text-secondary mb-2" href="/"><i className="fa fa-angle-right mr-2"></i>Home</a>
-                        <a className="text-secondary mb-2" href="/"><i className="fa fa-angle-right mr-2"></i>Our Shop</a>
-                        <a className="text-secondary mb-2" href="/"><i className="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                        <a className="text-secondary mb-2" href="/"><i className="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                        <a className="text-secondary mb-2" href="/"><i className="fa fa-angle-right mr-2"></i>Checkout</a>
-                        <a className="text-secondary" href="/"><i className="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        <Link className="text-secondary mb-2" to="/"><i className="fa fa-angle-right mr-2"></i>Home</Link>
+                        <Link className="text-secondary mb-2" to="/categories"><i className="fa fa-angle-right mr-2"></i>Our Shop</Link>
+                        <Link className="text-secondary mb-2" to="/categories"><i className="fa fa-angle-right mr-2"></i>Shop Detail</Link>
+                        <Link className="text-secondary mb-2" to="/cart"><i className="fa fa-angle-right mr-2"></i>Shopping Cart</Link>
+                        <Link className="text-secondary" to="/contact"><i className="fa fa-angle-right mr-2"></i>Contact Us</Link>
                     </div>
                 </div>
                 <div className="col-md-4 mb-5">
                     <h5 className="text-secondary text-uppercase mb-4">My Account</h5>
                     <div className="d-flex flex-column justify-content-start">
-                        <a className="text-secondary mb-2" href="/"><i className="fa fa-angle-right mr-2"></i>Home</a>
-                        <a className="text-secondary mb-2" href="/"><i className="fa fa-angle-right mr-2"></i>Our Shop</a>
-                        <a className="text-secondary mb-2" href="/"><i className="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                        <a className="text-secondary mb-2" href="/"><i className="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                        <a className="text-secondary mb-2" href="/"><i className="fa fa-angle-right mr-2"></i>Checkout</a>
-                        <a className="text-secondary" href="/"><i className="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        <Link className="text-secondary mb-2" to="/"><i className="fa fa-angle-right mr-2"></i>Home</Link>
+                        <Link className="text-secondary mb-2" to="/categories"><i className="fa fa-angle-right mr-2"></i>Our Shop</Link>
+                        <Link className="text-secondary mb-2" to="/categories"><i className="fa fa-angle-right mr-2"></i>Shop Detail</Link>
+                        <Link className="text-secondary mb-2" to="/cart"><i className="fa fa-angle-right mr-2"></i>Shopping Cart</Link>
+                        <Link className="text-secondary" to="/contact"><i className="fa fa-angle-right mr-2"></i>Contact Us</Link>
                     </div>
                 </div>
                 <div className="col-md-4 mb-5">
@@ -45,10 +45,10 @@ const Footer = () => {
                     </form>
                     <h6 className="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
                     <div className="d-flex">
-                        <a className="btn btn-primary btn-square mr-2" href="/"><i className="fab fa-twitter"></i></a>
-                        <a className="btn btn-primary btn-square mr-2" href="/"><i className="fab fa-facebook-f"></i></a>
-                        <a className="btn btn-primary btn-square mr-2" href="/"><i className="fab fa-linkedin-in"></i></a>
-                        <a className="btn btn-primary btn-square" href="/"><i className="fab fa-instagram"></i></a>
+                        <Link className="btn btn-primary btn-square mr-2" to="/" aria-label="Twitter (placeholder)"><i className="fab fa-twitter"></i></Link>
+                        <Link className="btn btn-primary btn-square mr-2" to="/" aria-label="Facebook (placeholder)"><i className="fab fa-facebook-f"></i></Link>
+                        <Link className="btn btn-primary btn-square mr-2" to="/" aria-label="LinkedIn (placeholder)"><i className="fab fa-linkedin-in"></i></Link>
+                        <Link className="btn btn-primary btn-square" to="/" aria-label="Instagram (placeholder)"><i className="fab fa-instagram"></i></Link>
                     </div>
                 </div>
             </div>
@@ -57,9 +57,9 @@ const Footer = () => {
     <div className="row border-top mx-xl-5 py-4" style={{borderColor: 'rgba(256, 256, 256, .1) !important'}}>
         <div className="col-md-6 px-xl-0">
             <p className="mb-md-0 text-center text-md-left text-secondary">
-                &copy; <a className="text-primary" href="/">Domain</a>. All Rights Reserved. Designed
+                &copy; <Link className="text-primary" to="/">Domain</Link>. All Rights Reserved. Designed
                 by
-                <a className="text-primary" href="https://htmlcodex.com">HTML Codex</a>
+                <a className="text-primary" href="https://htmlcodex.com" target="_blank" rel="noreferrer">HTML Codex</a>
             </p>
         </div>
         <div className="col-md-6 px-xl-0 text-center text-md-right">

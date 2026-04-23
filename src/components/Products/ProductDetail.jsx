@@ -15,6 +15,34 @@ const ProductDetail = ({ productID }) => {
   const [reviewMessage, setReviewMessage] = useState("");
   const product = prodCtx.getProduct(productID);
 
+  if (prodCtx.isLoading) {
+    return (
+      <div className="container-fluid pb-5">
+        <div className="row px-xl-5">
+          <div className="col">
+            <div className="bg-light p-30">Loading product details...</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="container-fluid pb-5">
+        <div className="row px-xl-5">
+          <div className="col">
+            <div className="bg-light p-30">
+              <h5 className="mb-3">Product not found.</h5>
+              <p className="mb-2">This product may not exist in the loaded catalog.</p>
+              <Link to="/categories">Back to categories</Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const addToCartHandler = () => {
     if (!product) return;
 
@@ -85,8 +113,7 @@ const ProductDetail = ({ productID }) => {
     }
   };
 
-  if (product)
-    return (
+  return (
       // <!-- Product Detail Start -->
       <div className="container-fluid pb-5">
         {/* <!-- Product Info Start --> */}
@@ -290,18 +317,18 @@ const ProductDetail = ({ productID }) => {
               <div className="d-flex pt-2">
                 <strong className="text-dark mr-2">Share on:</strong>
                 <div className="d-inline-flex">
-                  <a className="text-dark px-2" href="/temp">
+                  <button type="button" className="btn text-dark px-2" aria-label="Share on Facebook">
                     <i className="fab fa-facebook-f"></i>
-                  </a>
-                  <a className="text-dark px-2" href="/temp">
+                  </button>
+                  <button type="button" className="btn text-dark px-2" aria-label="Share on Twitter">
                     <i className="fab fa-twitter"></i>
-                  </a>
-                  <a className="text-dark px-2" href="/temp">
+                  </button>
+                  <button type="button" className="btn text-dark px-2" aria-label="Share on LinkedIn">
                     <i className="fab fa-linkedin-in"></i>
-                  </a>
-                  <a className="text-dark px-2" href="/temp">
+                  </button>
+                  <button type="button" className="btn text-dark px-2" aria-label="Share on Pinterest">
                     <i className="fab fa-pinterest"></i>
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>

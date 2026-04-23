@@ -1,10 +1,22 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import CategoryMenu from "../Categories/CategoryMenu";
 import { Link, NavLink } from "react-router-dom";
 import CartContext from "../../store/cart-context";
 
 const NavBar = () => {
   const cartCtx = useContext(CartContext);
+  const collapseRef = useRef(null);
+  const togglerRef = useRef(null);
+
+  const closeMobileMenu = () => {
+    // Bootstrap's collapse menu can stay open after react-router navigation
+    // on small screens, which blocks clicks on the page.
+    if (window.innerWidth >= 992) return;
+    const collapseEl = collapseRef.current;
+    if (collapseEl) collapseEl.classList.remove("show");
+    const togglerEl = togglerRef.current;
+    if (togglerEl) togglerEl.setAttribute("aria-expanded", "false");
+  };
 
   return (
     <div className="container-fluid bg-dark mb-30">
@@ -25,18 +37,21 @@ const NavBar = () => {
               className="navbar-toggler"
               data-toggle="collapse"
               data-target="#navbarCollapse"
+              ref={togglerRef}
             >
               <span className="navbar-toggler-icon"></span>
             </button>
             <div
               className="navbar-collapse justify-content-between"
               id="navbarCollapse"
+              ref={collapseRef}
             >
               <div className="navbar-nav mr-auto py-0">
                 <NavLink
                   to="/"
                   end
                   className={({ isActive }) => `nav-item nav-link${isActive ? " active" : ""}`}
+                  onClick={closeMobileMenu}
                 >
                   Home
                 </NavLink>
@@ -44,6 +59,7 @@ const NavBar = () => {
                 <NavLink
                   to="/categories"
                   className={({ isActive }) => `nav-item nav-link${isActive ? " active" : ""}`}
+                  onClick={closeMobileMenu}
                 >
                   Shop
                 </NavLink>
@@ -51,6 +67,7 @@ const NavBar = () => {
                 <NavLink
                   to="/cart"
                   className={({ isActive }) => `nav-item nav-link${isActive ? " active" : ""}`}
+                  onClick={closeMobileMenu}
                 >
                   Shopping Cart
                 </NavLink>
@@ -58,12 +75,13 @@ const NavBar = () => {
                 <NavLink
                   to="/contact"
                   className={({ isActive }) => `nav-item nav-link${isActive ? " active" : ""}`}
+                  onClick={closeMobileMenu}
                 >
                   Contact
                 </NavLink>
               </div>
               <div className="navbar-nav ml-auto py-0 d-none d-lg-block">
-                <a href="/temp" className="btn px-0">
+                <button type="button" className="btn px-0" aria-label="Wishlist (coming soon)">
                   <i className="fas fa-heart text-primary"></i>
                   <span
                     className="badge text-secondary border border-secondary rounded-circle"
@@ -71,7 +89,7 @@ const NavBar = () => {
                   >
                     0
                   </span>
-                </a>
+                </button>
                 <Link to="/cart" className="btn px-0 ml-3">
                   <i className="fas fa-shopping-cart text-primary"></i>
                   <span

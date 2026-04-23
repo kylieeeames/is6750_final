@@ -11,10 +11,10 @@ const TopBar = () => {
             <div className="row bg-secondary py-1 px-xl-5">
                 <div className="col-lg-6 d-none d-lg-block">
                     <div className="d-inline-flex align-items-center h-100">
-                        <a className="text-body mr-3" href="/temp">About</a>
-                        <a className="text-body mr-3" href="/temp">Contact</a>
-                        <a className="text-body mr-3" href="/temp">Help</a>
-                        <a className="text-body mr-3" href="/temp">FAQs</a>
+                        <Link className="text-body mr-3" to="/">About</Link>
+                        <Link className="text-body mr-3" to="/contact">Contact</Link>
+                        <Link className="text-body mr-3" to="/contact">Help</Link>
+                        <Link className="text-body mr-3" to="/contact">FAQs</Link>
                     </div>
                 </div>
                 <div className="col-lg-6 text-center text-lg-right">
@@ -52,23 +52,23 @@ const TopBar = () => {
                         </div>
                     </div>
                     <div className="d-inline-flex align-items-center d-block d-lg-none">
-                        <a href="/temp" className="btn px-0 ml-2">
+                        <button type="button" className="btn px-0 ml-2" aria-label="Wishlist (coming soon)">
                             <i className="fas fa-heart text-dark"></i>
                             <span className="badge text-dark border border-dark rounded-circle" style={{paddingBottom: 2 +'px'}}>0</span>
-                        </a>
-                        <a href="/temp" className="btn px-0 ml-2">
+                        </button>
+                        <Link to="/cart" className="btn px-0 ml-2">
                             <i className="fas fa-shopping-cart text-dark"></i>
                             <span className="badge text-dark border border-dark rounded-circle" style={{paddingBottom: 2 + 'px'}}>0</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
             <div className="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
                 <div className="col-lg-4">
-                    <a href="/" className="text-decoration-none">
+                    <Link to="/" className="text-decoration-none">
                         <span className="h1 text-uppercase text-primary bg-dark px-2">Multi</span>
                         <span className="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
-                    </a>
+                    </Link>
                 </div>
                 <div className="col-lg-4 col-6 text-left">
                     <form action="">

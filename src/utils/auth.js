@@ -2,7 +2,8 @@ import axios from "axios";
 import { redirect } from "react-router-dom";
 import db from "./db";
 
-const FIREBASE_API_KEY = import.meta.env.VITE_FIREBASE_WEB_API_KEY;
+const FIREBASE_API_KEY =
+  import.meta.env.VITE_FIREBASE_WEB_API_KEY || import.meta.env.VITE_FIREBASE_API_KEY;
 
 async function sendAuthRequest(email, password, endpoint) {
   if (!FIREBASE_API_KEY) {
@@ -26,7 +27,19 @@ function getRedirectTarget(request) {
 }
 
 function parseAuthError(error) {
-  return error.response?.data?.error?.message || error.message || "Authentication failed.";
+  const code = error.response?.data?.error?.message;
+
+  const mappedMessages = {
+    CONFIGURATION_NOT_FOUND:
+      "Firebase Authentication is not configured for this project. In Firebase Console, enable Authentication and Email/Password sign-in.",
+    OPERATION_NOT_ALLOWED:
+      "Email/Password sign-in is disabled. Enable it in Firebase Console > Authentication > Sign-in method.",
+    INVALID_API_KEY:
+      "Invalid Firebase API key. Verify VITE_FIREBASE_WEB_API_KEY in .env.local and restart the dev server.",
+    EMAIL_EXISTS: "An account with this email already exists. Try logging in.",
+  };
+
+  return mappedMessages[code] || code || error.message || "Authentication failed.";
 }
 
 export async function signupAction({ request }) {
@@ -52,7 +65,7 @@ export async function signupAction({ request }) {
 
     localStorage.setItem("userData", JSON.stringify(userData));
 
-    await db.put(`/users/${response.data.localId}.json`, {
+    await db.put(`/users/${response.data.localId}`, {
       firstname,
       lastname,
       email,
@@ -79,7 +92,7 @@ export async function loginAction({ request }) {
     const expiration = new Date(Date.now() + expiresInMs).toISOString();
     const localId = response.data.localId;
 
-    const userRecordResponse = await db.get(`/users/${localId}.json`);
+    const userRecordResponse = await db.get(`/users/${localId}`);
     const userRecord = userRecordResponse.data || {};
 
     const userData = {

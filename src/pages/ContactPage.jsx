@@ -22,11 +22,11 @@ export async function contactAction({ request }) {
   const contactData = Object.fromEntries(formData);
 
   try {
-    const response = await db.post("contacts.json", contactData);
+    const response = await db.post("contacts", contactData);
 
     return {
       success: true,
-      message: `Contact request saved. request ID is ${response.data.name}.`,
+      data: response.data,
     };
   } catch (error) {
     return {

@@ -1,4 +1,12 @@
-const ProductSidebar = ({ brands, brandCounts, selectedBrands, allBrandsSelected, totalProducts, onToggleAllBrands, onToggleBrand, }) => {
+const ProductSidebar = ({
+  brands,
+  brandCounts,
+  selectedBrands,
+  allBrandsSelected,
+  totalProducts,
+  onToggleAllBrands,
+  onToggleBrand,
+}) => {
     
   return (
     <div className="col-lg-3 col-md-4">
@@ -23,25 +31,28 @@ const ProductSidebar = ({ brands, brandCounts, selectedBrands, allBrandsSelected
           </div>
 
           {brands.map((brand) => {
-            const brandId = `brand-${brand.toLowerCase().replace(/\s+/g, "-")}`;
+            if (typeof brand !== "string" || brand.trim().length === 0) return null;
+
+            const normalizedBrand = brand.trim();
+            const brandId = `brand-${normalizedBrand.toLowerCase().replace(/\s+/g, "-")}`;
 
             return (
               <div
-                key={brand}
+                key={normalizedBrand}
                 className="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3"
               >
                 <input
                   type="checkbox"
                   className="custom-control-input"
                   id={brandId}
-                  checked={selectedBrands.includes(brand)}
-                  onChange={(event) => onToggleBrand(brand, event.target.checked)}
+                  checked={selectedBrands.includes(normalizedBrand)}
+                  onChange={(event) => onToggleBrand(normalizedBrand, event.target.checked)}
                 />
                 <label className="custom-control-label" htmlFor={brandId}>
-                  {brand}
+                  {normalizedBrand}
                 </label>
                 <span className="badge border font-weight-normal">
-                  {brandCounts[brand]}
+                  {brandCounts[normalizedBrand] ?? 0}
                 </span>
               </div>
             );

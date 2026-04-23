@@ -1,30 +1,23 @@
-import { get, push, ref, remove, set } from "firebase/database";
-import { db as firebaseDb } from "../firebase";
+import axios from "axios";
 
-const normalizePath = (path) => {
-	return path.replace(/^\/+/, "").replace(/\.json$/, "");
-};
+const baseURL = import.meta.env.VITE_FIREBASE_DATABASE_URL;
 
-const db = {
-	async get(path) {
-		const snapshot = await get(ref(firebaseDb, normalizePath(path)));
-		return { data: snapshot.exists() ? snapshot.val() : null };
-	},
+if (!baseURL) {
+	throw new Error("Missing VITE_FIREBASE_DATABASE_URL environment variable.");
+}
 
-	async post(path, payload) {
-		const newRecordRef = await push(ref(firebaseDb, normalizePath(path)), payload);
-		return { data: { name: newRecordRef.key } };
-	},
+const db = axios.create({
+	baseURL,
+});
 
-	async put(path, payload) {
-		await set(ref(firebaseDb, normalizePath(path)), payload);
-		return { data: payload };
-	},
-
-	async delete(path) {
-		await remove(ref(firebaseDb, normalizePath(path)));
-		return { data: null };
-	},
-};
+db.interceptors.request.use((config) => {
+	// Firebase RTDB expects `.json` at the end of paths.
+	// Normalize relative URLs like "/reviews/1" -> "reviews/1.json"
+	if (typeof config.url === "string" && !/^https?:\/\//i.test(config.url)) {
+		const strippedPath = config.url.replace(/^\/+/, "").replace(/\.json$/, "");
+		config.url = `${strippedPath}.json`;
+	}
+	return config;
+});
 
 export default db;
